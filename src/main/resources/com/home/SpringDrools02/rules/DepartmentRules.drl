@@ -1,0 +1,29 @@
+package com.home.SpringDrools02.rules
+
+import com.home.SpringDrools02.entities.Departments
+import com.home.SpringDrools02.entities.Locations
+import com.home.SpringDrools02.entities.RtnMessage
+
+query "getReturnMessages"
+    $result: RtnMessage()
+end
+
+rule "Has Manager" 
+    when 
+        $department: Departments(MANAGER_ID != null);
+    then
+        System.out.println("*** " + $department.toString() + ": Department Has Manager");
+        RtnMessage rtnMsg = new RtnMessage("*** " + $department.toString() + ": Department Has Manager");
+        insertLogical(rtnMsg);
+    end
+    
+rule "No Manager"
+    when 
+        $department: Departments(MANAGER_ID == null);
+    then
+        System.out.println("*** " + $department.toString() + ": Department No Manager");
+        RtnMessage rtnMsg = new RtnMessage("*** " + $department.toString() + ": Department No Manager");
+        insertLogical(rtnMsg);
+    end
+
+    
